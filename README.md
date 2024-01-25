@@ -3,7 +3,7 @@
 ## Buffer Overflow
 
 - [x] sploit1
-- [ ] sploit2
+- [x] sploit2
 - [x] sploit3
 - [ ] sploit4
 
