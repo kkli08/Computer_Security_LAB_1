@@ -56,6 +56,45 @@ Sploit2:
         the buffer to reach the $rip.
     
 Sploit3:
+    * objective:
+        Exploit with the use of the loop iteration in the function bar() in target file.
+        since the ltarg(88) is lager than the size of the buf(64), so we could use that to overflow
+        the buffer and overwrite the $rip.
+
+    * find the address with the use of gdb:
+        buf  ->> 0x3021fe5c (the original buf address would be 0x3021fe50, but in the target file
+        "AAAA" was added to the start of the buf so we need to bypass them and try to execute NOP)
+        $rbp ->> 0x3021fe90
+
+    line 31 - 32 :
+        ->> put NOP instructions into the buffer, so it can be used as a landing zone 
+        (when we try to return address point to the buffer). But in this lab we use hard coded
+        address point to the start address of the buf, so here the NOP instructions only used for
+        filling the remaining space outside the shellcode.
+    
+    line 35 - 40:
+        ->> put shellcode into the buffer, so when the return address point to the buf, 
+        the program will execute the shellcode and spawn a shell.
+
+    line 44 - 48:
+        ->> put the buf address into the buffer, and make sure when the target program executes the
+        strcpy command, it will overflow the buffer space and for the particular ($rip), it will be 
+        replaced by the buf[68] - buf[72].(buf[72] with the null byte)
 
 Sploit4:
+    * objective:
+        Exploit with the use of the loop iteration in the function foo() in target file.
+        since the len is lager than the size of the buf, so we could use that to overflow
+        the buffer, overwrite len and i so that we could reach $rip and overwrite the $rip.
 
+        when we reaching the len and i, reset i to 0 and len to 20; in that case, we could
+        have 20 more loop iterations and it will help us reach the $rip and overwrite the $rip
+        to the buf address.
+
+    * find the address with the use of gdb:
+        buf ->> 0x3021fdf0
+        len ->> 0x3021fe9c (overwrite to 20 (188 - 168))
+        i   ->> 0x3021fe98 (reset to 0 when reaching )
+        $rip->> 0x3021fea8
+
+    
