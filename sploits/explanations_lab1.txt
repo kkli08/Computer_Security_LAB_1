@@ -4,7 +4,7 @@
 Sploit1:
     * objective:
         Exploit with the use of the strcpy() function in target file.
-        
+
     * find the address with the use of gdb:
         buf ->> 0x3021fe50
     
@@ -24,8 +24,37 @@ Sploit1:
         replaced by the buf[120] - buf[123]. Notice that this is x86-64 bit architecture, so all the 
         addresses should be 8 byte long. So we also need to add a null byte in the buff so that the overflow
         will not affect the rest 4 byte of the $rip.
-Sploit2:
 
+Sploit2:
+    * objective:
+        Exploit with the use of the loop iteration in the function foo() in target file.
+        since the len is lager than the size of the buf, so we could use that to overflow
+        the buffer and overwrite the $rip.
+
+    * find the address with the use of gdb:
+        buf ->> 0x3021fd80
+        len ->> 0x3021fe88
+        i   ->> 0x3021fe8c
+
+    line 33 - 34 :
+        ->> put NOP instructions into the buffer, so it can be used as a landing zone 
+        (when we try to return address point to the buffer). But in this lab we use hard coded
+        address point to the start address of the buf, so here the NOP instructions only used for
+        filling the remaining space outside the shellcode.
+    
+    line 37 - 42:
+        ->> put shellcode into the buffer, so when the return address point to the buf, 
+        the program will execute the shellcode and spawn a shell.
+
+    line 48 - 50:
+        ->> overwrite the len to 284 so that the overflowed buffer could reach the $rip.
+
+    line 72 - 83:
+        ->> overwrite the i to '\x0f' so that the loop will jump over the 4 bytes of 'i'
+        and continue assigning NOP instructions until reach the $rip.
+        ->> use the environment variable to bypass the null byte and extend 
+        the buffer to reach the $rip.
+    
 Sploit3:
 
 Sploit4:
