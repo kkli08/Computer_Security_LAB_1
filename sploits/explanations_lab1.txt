@@ -97,4 +97,26 @@ Sploit4:
         i   ->> 0x3021fe98 (reset to 0 when reaching )
         $rip->> 0x3021fea8
 
+    line 34 - 35 :
+        ->> put NOP instructions into the buffer, so it can be used as a landing zone 
+        (when we try to return address point to the buffer). But in this lab we use hard coded
+        address point to the start address of the buf, so here the NOP instructions only used for
+        filling the remaining space outside the shellcode.
+    
+    line 38 - 43:
+        ->> put shellcode into the buffer, so when the return address point to the buf, 
+        the program will execute the shellcode and spawn a shell.
+    
+    line 47 & line 51:
+        ->> reset the i to 0 
+        ->> reset the len to 20
+        ->> so we could have 20 more loop iterations and it will help us reach 
+        the $rip and overwrite the $rip to the buf address.
+
+    line 61 - 65:
+        ->> assigning buf address
+    
+    line 72 - 81:
+        ->> use env variable to bypass the null byte
+
     
