@@ -1,0 +1,32 @@
+#Ke Li, 1005842554, damian.li@mail.utoronto.ca
+#
+
+Sploit1:
+    * objective:
+        Exploit with the use of the strcpy() function in target file.
+        
+    * find the address with the use of gdb:
+        buf ->> 0x3021fe50
+    
+    line 27 - 28 && line 36 - 37 :
+        ->> put NOP instructions into the buffer, so it can be used as a landing zone 
+        (when we try to return address point to the buffer). But in this lab we use hard coded
+        address point to the start address of the buf, so here the NOP instructions only used for
+        filling the remaining space outside the shellcode.
+    
+    line 30 - 35:
+        ->> put shellcode into the buffer, so when the return address point to the buf, 
+        the program will execute the shellcode and spawn a shell.
+
+    line 49 - 53:
+        ->> put the buf address into the buffer, and make sure when the target program executes the
+        strcpy command, it will overflow the buffer space and for the particular ($rip), it will be 
+        replaced by the buf[120] - buf[123]. Notice that this is x86-64 bit architecture, so all the 
+        addresses should be 8 byte long. So we also need to add a null byte in the buff so that the overflow
+        will not affect the rest 4 byte of the $rip.
+Sploit2:
+
+Sploit3:
+
+Sploit4:
+
