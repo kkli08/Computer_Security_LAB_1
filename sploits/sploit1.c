@@ -58,9 +58,9 @@ main ( int argc, char * argv[] )
 	int length = strlen(buff);
 	// Don't comment out this loop, for some reason idk why the sploit is not
 	// work without this for loop
-    for (int i = 0; i < length; i++) {
-        printf("\\x%02x", (unsigned char)buff[i]);
-    }
+    // for (int i = 0; i < length; i++) {
+    //     printf("\\x%02x", (unsigned char)buff[i]);
+    // }
     // printf("\n");
 	// =======================================
 
